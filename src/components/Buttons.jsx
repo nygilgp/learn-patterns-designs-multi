@@ -1,0 +1,17 @@
+import React from 'react';
+import { emitter } from '../App';
+
+export default function Buttons() {
+  const onIncrementCounter = () => {
+    emitter.emit('inc');
+  };
+  const onDecrementCounter = () => {
+    emitter.emit('dec');
+  };
+  return (
+    <div>
+      <button onClick={onIncrementCounter}>+</button>
+      <button onClick={onDecrementCounter}>-</button>
+    </div>
+  );
+}
