@@ -1,8 +1,17 @@
-# React + Vite
+# Advanced React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### Design patterns: Layout Components
 
-Currently, two official plugins are available:
+They focus on organizing other components with in a web page.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The core components of our pages, should be unaware & unconcerned about the precise location within the page structure.
+
+1.  [Split Screen](https://github.com/nygilgp/learn-patterns-designs-multi/tree/split-screen)
+2.  [Lists](https://github.com/nygilgp/learn-patterns-designs-multi/tree/lists)
+3.  [Modal](https://github.com/nygilgp/learn-patterns-designs-multi/tree/modal)
+
+#### Design patterns: Container Components
+
+Components are unare of the source or management of their data.
+
+1.  [Split Screen]()
