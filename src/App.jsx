@@ -7,31 +7,14 @@ import Regular from './components/lists/Regular';
 import SmallBookListItems from './components/books/SmallListItems';
 import LargeBookListItems from './components/books/LargeListItems';
 import Numberd from './components/lists/Numberd';
+import Modal from './components/Modal';
 
 export const App = () => {
   return (
     <>
-      <Regular
-        items={authors}
-        sourceName="author"
-        ItemComponent={SmallAuthorsListItems}
-      />
-      <Numberd
-        items={authors}
-        sourceName="author"
-        ItemComponent={LargeAuthorsListItems}
-      />
-
-      <Regular
-        items={books}
-        sourceName="book"
-        ItemComponent={SmallBookListItems}
-      />
-      <Numberd
-        items={books}
-        sourceName="book"
-        ItemComponent={LargeBookListItems}
-      />
+      <Modal>
+        <LargeBookListItems book={books[0]} />
+      </Modal>
     </>
   );
 };
