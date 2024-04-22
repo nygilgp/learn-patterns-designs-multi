@@ -50,27 +50,27 @@ The core components of our pages, should be unaware & unconcerned about the prec
   ItemComponent={SmallAuthorsListItems}
 />`</code>
 
-                                              items => is the data
-                                              sourceName => is the prop name that needs to be passed to ItemComponent
-                                              ItemComponent => is how each item of the data is to be displayed to user
+                                                                                                                          items => is the data
+                                                                                                                          sourceName => is the prop name that needs to be passed to ItemComponent
+                                                                                                                          ItemComponent => is how each item of the data is to be displayed to user
 
-                                              export default function Regular({ items, sourceName, ItemComponent }) {
-                                                return (
-                                                  <>
-                                                    {items.map((item, i) => (
-                                                      <ItemComponent key={i} {...{ [sourceName]: item }} />
-                                                    ))}
-                                                  </>
-                                                );
-                                              }
+                                                                                                                          export default function Regular({ items, sourceName, ItemComponent }) {
+                                                                                                                            return (
+                                                                                                                              <>
+                                                                                                                                {items.map((item, i) => (
+                                                                                                                                  <ItemComponent key={i} {...{ [sourceName]: item }} />
+                                                                                                                                ))}
+                                                                                                                              </>
+                                                                                                                            );
+                                                                                                                          }
 
-                                              export default function SmallListItems({ author }) {
-                                                const { name, age } = author;
-                                                return (
-                                                  <p>
-                                                    Name: {name}, Age: {age}
-                                                  </p>
-                                                );
+                                                                                                                          export default function SmallListItems({ author }) {
+                                                                                                                            const { name, age } = author;
+                                                                                                                            return (
+                                                                                                                              <p>
+                                                                                                                                Name: {name}, Age: {age}
+                                                                                                                              </p>
+                                                                                                                            );
 
 3.  [Modal](https://github.com/nygilgp/learn-patterns-designs-multi/tree/modal)
     A modal is the most used component, here we define a modal component
@@ -96,7 +96,58 @@ The core components of our pages, should be unaware & unconcerned about the prec
 
 Components are unare of the source or management of their data.
 
-1.  [Split Screen]()
+1.  [Data Source Loader With Renderer](https://github.com/nygilgp/learn-patterns-designs-multi/tree/loader)
+    Data source container component will renderer the child component with the data provided to it. Data can be from anywhere.
+
+        export default function DataSourceWithRender({ getData = () => {}, render }) {
+          const [resource, setResource] = useState(null);
+
+          useEffect(() => {
+            (async () => {
+              const data = await getData();
+              setResource(data);
+            })();
+          }, []);
+
+          return render(resource);
+        }
+
+        async function getDataFromServer(url) {
+          const response = await axios.get(url);
+          return response.data;
+        }
+
+        const getDataFromLocalStorage = async (key) =>
+          (await localStorage.getItem(key)) ?? '';
+
+        const Message = ({ msg }) => <h1>{msg}</h1>;
+
+        export const App = () => {
+          return (
+            <>
+              <DataSourceWithRender
+                getData={() => getDataFromServer('http://localhost:9090/users/1')}
+                render={(resource) => <UserInfo user={resource} />}
+              />
+              <DataSourceWithRender
+                getData={() => getDataFromLocalStorage('test')}
+                render={(resource) => <Message msg={resource} />}
+              />
+            </>
+          );
+        };
+
+#### Design patterns: Controlled and Uncontrolled Components
+
+Uncontrolled components are were component itself manages its own internal state.
+ex: In this case the form field states are defined in the component and onSubmit method is the only prop passed down from parent to child
+
+Controlled components on the other hand, the parent component is responsible for managing the state.
+ex: Here the controlled component will have no use state hook, all fields and submit method will be passed down from parent to child.
+
+Controlled components are more easier to test, as the desired state of the component can be initialized via props.
+
+1.  [Observer Pattern](https://github.com/nygilgp/learn-patterns-designs-multi/tree/observer-pattern)
 
 #### Design patterns: More
 
