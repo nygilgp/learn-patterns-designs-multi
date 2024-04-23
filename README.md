@@ -50,27 +50,27 @@ The core components of our pages, should be unaware & unconcerned about the prec
   ItemComponent={SmallAuthorsListItems}
 />`</code>
 
-                                                                                                                          items => is the data
-                                                                                                                          sourceName => is the prop name that needs to be passed to ItemComponent
-                                                                                                                          ItemComponent => is how each item of the data is to be displayed to user
+                                                                                                                                                                      items => is the data
+                                                                                                                                                                      sourceName => is the prop name that needs to be passed to ItemComponent
+                                                                                                                                                                      ItemComponent => is how each item of the data is to be displayed to user
 
-                                                                                                                          export default function Regular({ items, sourceName, ItemComponent }) {
-                                                                                                                            return (
-                                                                                                                              <>
-                                                                                                                                {items.map((item, i) => (
-                                                                                                                                  <ItemComponent key={i} {...{ [sourceName]: item }} />
-                                                                                                                                ))}
-                                                                                                                              </>
-                                                                                                                            );
-                                                                                                                          }
+                                                                                                                                                                      export default function Regular({ items, sourceName, ItemComponent }) {
+                                                                                                                                                                        return (
+                                                                                                                                                                          <>
+                                                                                                                                                                            {items.map((item, i) => (
+                                                                                                                                                                              <ItemComponent key={i} {...{ [sourceName]: item }} />
+                                                                                                                                                                            ))}
+                                                                                                                                                                          </>
+                                                                                                                                                                        );
+                                                                                                                                                                      }
 
-                                                                                                                          export default function SmallListItems({ author }) {
-                                                                                                                            const { name, age } = author;
-                                                                                                                            return (
-                                                                                                                              <p>
-                                                                                                                                Name: {name}, Age: {age}
-                                                                                                                              </p>
-                                                                                                                            );
+                                                                                                                                                                      export default function SmallListItems({ author }) {
+                                                                                                                                                                        const { name, age } = author;
+                                                                                                                                                                        return (
+                                                                                                                                                                          <p>
+                                                                                                                                                                            Name: {name}, Age: {age}
+                                                                                                                                                                          </p>
+                                                                                                                                                                        );
 
 3.  [Modal](https://github.com/nygilgp/learn-patterns-designs-multi/tree/modal)
     A modal is the most used component, here we define a modal component
@@ -140,14 +140,30 @@ Components are unare of the source or management of their data.
 #### Design patterns: Controlled and Uncontrolled Components
 
 Uncontrolled components are were component itself manages its own internal state.
-ex: In this case the form field states are defined in the component and onSubmit method is the only prop passed down from parent to child
+ex 1 Form: In this case the form field states are defined in the component and onSubmit method is the only prop passed down from parent to child
+
+ex 2 Modal: We have the state and close action defined inside the modal component. Now there is no way for the parent to controll the modal
+
+ex 3 Flow: A multi page form, if the state and data are defined inside the component, it will be difficult to test the flow.
 
 Controlled components on the other hand, the parent component is responsible for managing the state.
-ex: Here the controlled component will have no use state hook, all fields and submit method will be passed down from parent to child.
+ex 1 Form: Here the controlled component will have no use state hook, all fields and submit method will be passed down from parent to child.
+
+ex 2 Modal: We define the state and actions in the parent and pass them as props inside the modal. Modal only has the duty to display the children and state and action are comming from outside, so easy to controll.
+
+ex 3 Flow: A multi page form, we define the state and data collection function in the parent and pass them as props its easy to test, by changing the props. We can even do skip of step which is not needed.
 
 Controlled components are more easier to test, as the desired state of the component can be initialized via props.
 
-1.  [Observer Pattern](https://github.com/nygilgp/learn-patterns-designs-multi/tree/observer-pattern)
+1.  [Controlled components](https://github.com/nygilgp/learn-patterns-designs-multi/tree/controlled-component)
+
+#### Design patterns: HOCs
+
+A component that returns another component. HOCs are functions that return components.
+
+Improve exsisting components without modifying their code.
+
+1.  [HOCs](https://github.com/nygilgp/learn-patterns-designs-multi/tree/higher-order-components)
 
 #### Design patterns: More
 
