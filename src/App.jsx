@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { logProps } from './components/log-props';
+import { UserInfo } from './components/user-info';
 
+const UserInfoWrapper = logProps(UserInfo);
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <div>Start here...</div>
+      <UserInfoWrapper test={'test'} a="some text to check" b="values" />
     </>
   );
 }
