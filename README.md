@@ -50,27 +50,27 @@ The core components of our pages, should be unaware & unconcerned about the prec
   ItemComponent={SmallAuthorsListItems}
 />`</code>
 
-            items => is the data
-            sourceName => is the prop name that needs to be passed to ItemComponent
-            ItemComponent => is how each item of the data is to be displayed to user
+                                                                                items => is the data
+                                                                                sourceName => is the prop name that needs to be passed to ItemComponent
+                                                                                ItemComponent => is how each item of the data is to be displayed to user
 
-            export default function Regular({ items, sourceName, ItemComponent }) {
-              return (
-                <>
-                  {items.map((item, i) => (
-                    <ItemComponent key={i} {...{ [sourceName]: item }} />
-                  ))}
-                </>
-              );
-            }
+                                                                                export default function Regular({ items, sourceName, ItemComponent }) {
+                                                                                  return (
+                                                                                    <>
+                                                                                      {items.map((item, i) => (
+                                                                                        <ItemComponent key={i} {...{ [sourceName]: item }} />
+                                                                                      ))}
+                                                                                    </>
+                                                                                  );
+                                                                                }
 
-            export default function SmallListItems({ author }) {
-              const { name, age } = author;
-              return (
-                <p>
-                  Name: {name}, Age: {age}
-                </p>
-              );
+                                                                                export default function SmallListItems({ author }) {
+                                                                                  const { name, age } = author;
+                                                                                  return (
+                                                                                    <p>
+                                                                                      Name: {name}, Age: {age}
+                                                                                    </p>
+                                                                                  );
 
 3.  [Modal](https://github.com/nygilgp/learn-patterns-designs-multi/tree/modal)
     A modal is the most used component, here we define a modal component
@@ -164,6 +164,51 @@ A component that returns another component. HOCs are functions that return compo
 Improve exsisting components without modifying their code.
 
 1.  [HOCs](https://github.com/nygilgp/learn-patterns-designs-multi/tree/higher-order-components)
+
+We build a logger hoc and include user info hoc, and we wrap the component. We never touch the child component. The data or prop manipulation is done by the HOC.
+
+    export const logProps = (Component) => {
+      return (props) => {
+        console.log(props);
+        return <Component {...props} />;
+      };
+    };
+
+    export const includeUser = (Component, userId) => {
+      return (props) => {
+        const [user, setUser] = useState(null);
+
+        useEffect(() => {
+          (async () => {
+            const response = await axios.get(
+              `http://localhost:9090/users/${parseInt(userId)}`
+            );
+            setUser(response.data);
+          })();
+        }, []);
+
+        return <Component {...props} user={user} />;
+      };
+    };
+
+    const UserInfoWrapper = logProps(UserInfo);
+    const IncludeUserWrapper = includeUser(UserInfoWrapper, 2);
+    function App() {
+      return (
+        <>
+          <IncludeUserWrapper />
+          <UserInfoForm />
+        </>
+      );
+    }
+
+#### Design patterns: Custom Hooks
+
+Custom hooks are hooks that are created by combining the basic hooks provided by react.
+
+Allow us to share complex behaviour/logic among multiple components.
+
+1.  [Custom Hooks](https://github.com/nygilgp/learn-patterns-designs-multi/tree/custom-hooks)
 
 #### Design patterns: More
 
