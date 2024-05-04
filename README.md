@@ -50,27 +50,27 @@ The core components of our pages, should be unaware & unconcerned about the prec
   ItemComponent={SmallAuthorsListItems}
 />`</code>
 
-                                                                                                            items => is the data
-                                                                                                            sourceName => is the prop name that needs to be passed to ItemComponent
-                                                                                                            ItemComponent => is how each item of the data is to be displayed to user
+                                                                                                                            items => is the data
+                                                                                                                            sourceName => is the prop name that needs to be passed to ItemComponent
+                                                                                                                            ItemComponent => is how each item of the data is to be displayed to user
 
-                                                                                                            export default function Regular({ items, sourceName, ItemComponent }) {
-                                                                                                              return (
-                                                                                                                <>
-                                                                                                                  {items.map((item, i) => (
-                                                                                                                    <ItemComponent key={i} {...{ [sourceName]: item }} />
-                                                                                                                  ))}
-                                                                                                                </>
-                                                                                                              );
-                                                                                                            }
+                                                                                                                            export default function Regular({ items, sourceName, ItemComponent }) {
+                                                                                                                              return (
+                                                                                                                                <>
+                                                                                                                                  {items.map((item, i) => (
+                                                                                                                                    <ItemComponent key={i} {...{ [sourceName]: item }} />
+                                                                                                                                  ))}
+                                                                                                                                </>
+                                                                                                                              );
+                                                                                                                            }
 
-                                                                                                            export default function SmallListItems({ author }) {
-                                                                                                              const { name, age } = author;
-                                                                                                              return (
-                                                                                                                <p>
-                                                                                                                  Name: {name}, Age: {age}
-                                                                                                                </p>
-                                                                                                              );
+                                                                                                                            export default function SmallListItems({ author }) {
+                                                                                                                              const { name, age } = author;
+                                                                                                                              return (
+                                                                                                                                <p>
+                                                                                                                                  Name: {name}, Age: {age}
+                                                                                                                                </p>
+                                                                                                                              );
 
 3.  [Modal](https://github.com/nygilgp/learn-patterns-designs-multi/tree/modal)
     A modal is the most used component, here we define a modal component
@@ -244,6 +244,49 @@ We can create custom hook to fetch data from anywhere as below:
 #### Design patterns: Functional programming
 
 1.  [Recursive](https://github.com/nygilgp/learn-patterns-designs-multi/tree/recursive)
+
+When you want to display data as below in a recursive manner
+
+    const myNestedObject = {
+      key1: 'value1',
+      key2: {
+        innerKey1: 'innerValue1',
+        innerKey2: {
+          innerInnerKey1: 'innerInnerValue1',
+          innerInnerKey2: 'innerInnerValue2',
+        },
+      },
+      key3: 'value3',
+    };
+
+We need to create a recursive component as below:
+
+    const isObject = (data) => typeof data === 'object' && data !== null;
+
+    function RecursiveComponent({ data }) {
+      if (!isObject(data)) {
+        return <li>{data}</li>;
+      }
+
+      const pairs = Object.entries(data);
+      return (
+        <>
+          {pairs.map(([key, value]) => {
+            return (
+              <li key={key}>
+                {key}:
+                <ul>
+                  <RecursiveComponent data={value} />
+                </ul>
+              </li>
+            );
+          })}
+        </>
+      );
+    }
+
+
+     <RecursiveComponent data={myNestedObject} />
 
 #### Design patterns: More
 
