@@ -1,11 +1,21 @@
-import { useState } from 'react';
+import RecursiveComponent from './components/recursive';
+
+const myNestedObject = {
+  key1: 'value1',
+  key2: {
+    innerKey1: 'innerValue1',
+    innerKey2: {
+      innerInnerKey1: 'innerInnerValue1',
+      innerInnerKey2: 'innerInnerValue2',
+    },
+  },
+  key3: 'value3',
+};
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <div>Start here...</div>
+      <RecursiveComponent data={myNestedObject} />
     </>
   );
 }
