@@ -50,27 +50,27 @@ The core components of our pages, should be unaware & unconcerned about the prec
   ItemComponent={SmallAuthorsListItems}
 />`</code>
 
-                                                                                items => is the data
-                                                                                sourceName => is the prop name that needs to be passed to ItemComponent
-                                                                                ItemComponent => is how each item of the data is to be displayed to user
+                                                                                                            items => is the data
+                                                                                                            sourceName => is the prop name that needs to be passed to ItemComponent
+                                                                                                            ItemComponent => is how each item of the data is to be displayed to user
 
-                                                                                export default function Regular({ items, sourceName, ItemComponent }) {
-                                                                                  return (
-                                                                                    <>
-                                                                                      {items.map((item, i) => (
-                                                                                        <ItemComponent key={i} {...{ [sourceName]: item }} />
-                                                                                      ))}
-                                                                                    </>
-                                                                                  );
-                                                                                }
+                                                                                                            export default function Regular({ items, sourceName, ItemComponent }) {
+                                                                                                              return (
+                                                                                                                <>
+                                                                                                                  {items.map((item, i) => (
+                                                                                                                    <ItemComponent key={i} {...{ [sourceName]: item }} />
+                                                                                                                  ))}
+                                                                                                                </>
+                                                                                                              );
+                                                                                                            }
 
-                                                                                export default function SmallListItems({ author }) {
-                                                                                  const { name, age } = author;
-                                                                                  return (
-                                                                                    <p>
-                                                                                      Name: {name}, Age: {age}
-                                                                                    </p>
-                                                                                  );
+                                                                                                            export default function SmallListItems({ author }) {
+                                                                                                              const { name, age } = author;
+                                                                                                              return (
+                                                                                                                <p>
+                                                                                                                  Name: {name}, Age: {age}
+                                                                                                                </p>
+                                                                                                              );
 
 3.  [Modal](https://github.com/nygilgp/learn-patterns-designs-multi/tree/modal)
     A modal is the most used component, here we define a modal component
@@ -209,6 +209,41 @@ Custom hooks are hooks that are created by combining the basic hooks provided by
 Allow us to share complex behaviour/logic among multiple components.
 
 1.  [Custom Hooks](https://github.com/nygilgp/learn-patterns-designs-multi/tree/custom-hooks)
+
+We can create custom hook to fetch data from anywhere as below:
+
+    import { useState, useEffect } from 'react';
+
+    export const useDataSource = (getData) => {
+      const [resource, setResource] = useState(null);
+
+      useEffect(() => {
+        (async () => {
+          const response = await getData();
+          setResource(response);
+        })();
+      }, [getData]);
+
+      return resource;
+    };
+
+    const fetchFromServer = async (resourceUrl) => {
+      const response = await axios.get(resourceUrl);
+      return response.data;
+    };
+
+    export const UserInfo = ({ userId }) => {
+      const user = useDataSource(
+        fetchFromServer(`http://localhost:9090/users/${userId}`)
+      );
+      const { name, age, country, books } = user || {};
+      .
+      .
+      .
+
+#### Design patterns: Functional programming
+
+1.  [Recursive](https://github.com/nygilgp/learn-patterns-designs-multi/tree/recursive)
 
 #### Design patterns: More
 
