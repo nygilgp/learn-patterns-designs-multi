@@ -50,27 +50,27 @@ The core components of our pages, should be unaware & unconcerned about the prec
   ItemComponent={SmallAuthorsListItems}
 />`</code>
 
-                                                                                                                                                                                                                                                                                            items => is the data
-                                                                                                                                                                                                                                                                                            sourceName => is the prop name that needs to be passed to ItemComponent
-                                                                                                                                                                                                                                                                                            ItemComponent => is how each item of the data is to be displayed to user
+                                                                                                                                                                                                                                                                                                        items => is the data
+                                                                                                                                                                                                                                                                                                        sourceName => is the prop name that needs to be passed to ItemComponent
+                                                                                                                                                                                                                                                                                                        ItemComponent => is how each item of the data is to be displayed to user
 
-                                                                                                                                                                                                                                                                                            export default function Regular({ items, sourceName, ItemComponent }) {
-                                                                                                                                                                                                                                                                                              return (
-                                                                                                                                                                                                                                                                                                <>
-                                                                                                                                                                                                                                                                                                  {items.map((item, i) => (
-                                                                                                                                                                                                                                                                                                    <ItemComponent key={i} {...{ [sourceName]: item }} />
-                                                                                                                                                                                                                                                                                                  ))}
-                                                                                                                                                                                                                                                                                                </>
-                                                                                                                                                                                                                                                                                              );
-                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                        export default function Regular({ items, sourceName, ItemComponent }) {
+                                                                                                                                                                                                                                                                                                          return (
+                                                                                                                                                                                                                                                                                                            <>
+                                                                                                                                                                                                                                                                                                              {items.map((item, i) => (
+                                                                                                                                                                                                                                                                                                                <ItemComponent key={i} {...{ [sourceName]: item }} />
+                                                                                                                                                                                                                                                                                                              ))}
+                                                                                                                                                                                                                                                                                                            </>
+                                                                                                                                                                                                                                                                                                          );
+                                                                                                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                                                                                                                            export default function SmallListItems({ author }) {
-                                                                                                                                                                                                                                                                                              const { name, age } = author;
-                                                                                                                                                                                                                                                                                              return (
-                                                                                                                                                                                                                                                                                                <p>
-                                                                                                                                                                                                                                                                                                  Name: {name}, Age: {age}
-                                                                                                                                                                                                                                                                                                </p>
-                                                                                                                                                                                                                                                                                              );
+                                                                                                                                                                                                                                                                                                        export default function SmallListItems({ author }) {
+                                                                                                                                                                                                                                                                                                          const { name, age } = author;
+                                                                                                                                                                                                                                                                                                          return (
+                                                                                                                                                                                                                                                                                                            <p>
+                                                                                                                                                                                                                                                                                                              Name: {name}, Age: {age}
+                                                                                                                                                                                                                                                                                                            </p>
+                                                                                                                                                                                                                                                                                                          );
 
 3.  [Modal](https://github.com/nygilgp/learn-patterns-designs-multi/tree/modal)
     A modal is the most used component, here we define a modal component
@@ -411,7 +411,7 @@ Here you can see the LargeRedButton is created from SmallRedButton just by chang
 1.  [React Portals](./docs/reactPortals.md)
 2.  [Forward Refs](./docs/forward-ref.md)
 3.  [Error Boundaries](./docs/error-boundaries.md)
-4.  [Keys]()
+4.  [Keys](./docs/keys.md)
 5.  [Event Listners]()
 6.  [UseLayoutEffect]()
 7.  [UseId]()
@@ -420,6 +420,10 @@ Here you can see the LargeRedButton is created from SmallRedButton just by chang
 10. [UseDeferedValue]()
 11. [UseTransition]()
 12. [Async React Router]()
+
+#### Clean code tips
+
+1.  [Using element as prop](./docs/elementAsProp.md)
 
 #### Scalable Project Architecture
 
