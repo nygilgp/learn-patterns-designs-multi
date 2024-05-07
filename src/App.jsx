@@ -1,12 +1,23 @@
-import { useState } from 'react';
+import Button from './components/button';
+
+const style = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+  alignItems: 'center',
+};
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>Start here...</div>
-    </>
+    <div style={style}>
+      <Button size="s">Small</Button>
+      <Button size="m">Medium</Button>
+      <Button size="l">Large</Button>
+      <Button size="xl">xLarge</Button>
+      <Button As="a" size="l" href="/">
+        Link
+      </Button>
+    </div>
   );
 }
 
