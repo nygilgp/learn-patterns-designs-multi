@@ -1,12 +1,23 @@
-import { useState } from 'react';
+import { useRef } from 'react';
+import './App.css';
+import { Input } from './input';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const inputRef = useRef();
+
+  function submitHandler(e) {
+    e.preventDefault();
+
+    console.log(inputRef.current.value);
+  }
 
   return (
-    <>
-      <div>Start here...</div>
-    </>
+    <form onSubmit={submitHandler}>
+      <Input ref={inputRef} />
+      <button type="submit" className="button">
+        Submit
+      </button>
+    </form>
   );
 }
 
