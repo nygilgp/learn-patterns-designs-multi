@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import Navbar from './navbar';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigation } from 'react-router-dom';
 
-export class NavLayout extends Component {
-  render() {
-    return (
-      <>
-        <Navbar />
-        <Outlet />
-      </>
-    );
-  }
+function NavLayout() {
+  const { state } = useNavigation();
+
+  return (
+    <>
+      <Navbar />
+      {state === 'loading' ? <div>Loading...</div> : <Outlet />}
+    </>
+  );
 }
 
 export default NavLayout;

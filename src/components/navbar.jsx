@@ -9,6 +9,9 @@ function Navbar() {
           <NavLink to="/">Home</NavLink>
         </li>
         <li>
+          <NavLink to="/todo">Todo</NavLink>
+        </li>
+        <li>
           <NavLink to="/store">Store</NavLink>
         </li>
         <li>

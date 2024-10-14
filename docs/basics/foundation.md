@@ -47,4 +47,6 @@ You need to close of your JSX tag (self close or closing tag at the end of it)
 
 undefined, null and false will return nothing from the component.
 
+JSX when ever it sees a element which starts with lower case letter cosiders it as normal HTML tag(Todolist => todolist)
+
 [back](../../README.md)

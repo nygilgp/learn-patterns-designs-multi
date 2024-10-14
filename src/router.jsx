@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Navigate, redirect } from 'react-router-dom';
 import Home from './pages/home';
 import Store from './pages/store';
 import About from './pages/about';
@@ -6,6 +6,7 @@ import NavLayout from './components/navlayout';
 import Team from './pages/team';
 import TeamMember from './pages/teamMember';
 import TeamNavLayout from './components/teamNavLayout';
+import Todolist from './pages/todolist';
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,11 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: '/todo',
+        element: <Todolist />,
+        errorElement: <h1>Errors in todo</h1>,
+      },
+      {
         path: '/store',
         element: <Store />,
         errorElement: <h1>Errors in store</h1>,
@@ -30,11 +36,30 @@ export const router = createBrowserRouter([
       {
         path: '/team',
         element: <TeamNavLayout />,
+        loader: ({ request: { signal } }) => {
+          return fetch('https://jsonplaceholder.typicode.com/users', {
+            signal,
+          });
+        },
         children: [
           { index: true, element: <Team /> },
           { path: 'joe', element: <TeamMember name={'Joe'} /> },
           { path: 'ny', element: <TeamMember name={'Ny'} /> },
-          { path: ':memberId', element: <TeamMember /> },
+          {
+            path: ':memberId',
+            loader: ({ request: { signal }, params }) => {
+              return fetch(
+                `https://jsonplaceholder.typicode.com/users/${params.memberId}`,
+                {
+                  signal,
+                }
+              ).then((res) => {
+                if (res.status === 200) return res.json();
+                throw redirect('/team');
+              });
+            },
+            element: <TeamMember />,
+          },
         ],
       },
     ],

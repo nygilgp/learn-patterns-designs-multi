@@ -1,8 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import teamMembers from '../data/teamMembers.json';
+import { NavLink, useLoaderData } from 'react-router-dom';
+// import teamMembers from '../data/teamMembers.json';
 
 function NavbarTeam() {
+  const teamMembers = useLoaderData();
   return (
     <nav>
       <ul>
@@ -14,7 +15,7 @@ function NavbarTeam() {
         </li>
         {teamMembers.map(({ id, name }) => (
           <li key={id}>
-            <NavLink to={id}>
+            <NavLink to={id.toString()}>
               {id} - {name}
             </NavLink>
           </li>
