@@ -215,4 +215,67 @@ Passing child components as prop or children prop when the code is complex is th
         return <button>Submit {clonedIcon}</button>;
     };
 
+###### Memoization
+
+Even though the process is memoization (caching) its best to avoid heavy logic, as the function will be initialized during each re-render. So use it with caution.
+
+useCallback => returns a memoized function
+
+    const Component = () => {
+        const submit = useCallback(() => { /* Some logic */}, []);
+
+        useEffect(() => {
+            sumbmit();
+
+            // now that submit is memoized, this useEffect won't be triggered on every re-render.
+        }, [submit]);
+
+        return ...
+    }
+
+useMemo => returns the memoized data that is returned by the execution of the method it called
+
+    const Component = () => {
+        const submit = useMemo(() =>{
+            // return from the memo callback
+            return () => { /* Some logic */}
+        }, []);
+
+        useEffect(() => {
+            sumbmit();
+
+            // now that submit is memoized, this useEffect won't be triggered on every re-render.
+        }, [submit]);
+
+        return ...
+    }
+
+There are only two main senarios where memoization of props is necessary.
+
+1st is when the prop is used as a child dependency in child hook
+
+    const Container = () =>{
+        // Memoize the fetchData function to avoid re-render
+        const fetchData = useCallback(() => {
+            // Add fetch logic here
+        }, []);
+        return <Component onInit={fetchData} />
+    }
+
+    const Component = ({ onInit }) => {
+        useEffect(() => {
+            onInit();
+        }, [onInit]);
+
+        return <div>Child component</div>
+    }
+
+2nd situation is the use of React.Memo
+
+###### React.Memo
+
+It stops the execution of re-render and check for the props change to proceed.
+
+You need to memoize the data and function using useMemo and useCallback respectively to make the best use of React.Memo, but this is difficult, if multiple people are working on the project.
+
 [back](../../README.md)
