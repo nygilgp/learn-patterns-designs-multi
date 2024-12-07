@@ -119,6 +119,16 @@ Common use case is to cean up added event handlers or setTimout handlers, so the
         }
     }, [name])
 
+##### useLayoutEffect
+
+So main difference is useLayoutEffect is run after everything is rendered into the screen. Then based on the changes in dependency variable after executing the callback, the screen is re-rendered again. So it is more synchronous.
+
+useLayoutEffect is slow, as it will run all the code inside the method and then only re-render.
+
+Best use case is when there is something flashing in the screen between renders and also when there is css changes where one element is dependent on another inside the effect.
+
+Always use useEffect, as it re-renders things fast. useLayoutEffect is to be used only when there is a bad user exeperience while using useEffect.
+
 ###### reference vs value issue in useEffect
 
 If we define an object const and use it as a dependant value, then useEffect will always get updated and even if the value is the same the reference won't be the same.
@@ -214,5 +224,79 @@ Passing child components as prop or children prop when the code is complex is th
 
         return <button>Submit {clonedIcon}</button>;
     };
+
+##### Hook rules
+
+Hooks should be in the start of a file
+Why? Hooks cannot be called conditionally and inside any other block other than the functional component level.
+
+It also cannot be called inside other non component functions.
+
+<b>So hooks can be used in functional components and custom hooks only.</b>
+
+It should not be in any loops, and should always be in the same order.
+
+##### useRef
+
+Persist data between different renders, also not have that data related to state or props.
+
+    const dataRef = useRef("Text")
+    dataRef.current = "New Text"; // doesn't re-render the page
+    console.log(dataRef.current)
+
+Also add a reference to html element
+
+    const [name, setName] = useSate();
+    const inputRef = useRef();
+    useEffect(() => {
+        console.log(inputRef.current.value)
+        // or
+        // inputRef.current.focus();
+    });
+
+    return <>
+        <input ref={inputRef} value={name} onChange={(e) => setName(e.target.value) } />
+    </>
+
+##### useMemo
+
+Used for performance and for memoization.
+
+Any time you have code that is rather slow to run, or doesn't need to run on every single render, use useMemo.
+
+    const filteredList = useMemo(() => {
+        return LIST.filter(n => n.toString().includer(query))
+    }, [query])
+
+Here the dependecy array is important, as with the change of this dependecies only the code will be executed, else it will return the same data once executed and cached.
+<b>Don't over use useMemo, as it will impact the performance.</b>
+
+##### useCallback
+
+Used to memoize functions. Every time a component re-renders, the useEffect which has function as the dependency will, re create the functions defined inside the component. To avoid we can wrap it inside a useCallback.
+
+<b>useCallback should be used, in case a function needs to be executed inside the useEffect. Instead of providing the list of all the dependent varibles, the function can be provided as the dependency.</b>
+
+    function App() {
+        const [name, setName] = useState();
+
+        const printName = useCallback(() => {
+            console.log("Print name", name)
+        }, [name])
+
+        useEffect(() => {
+            console.log("In effect)
+            printName();
+        }, [printName])
+
+        return (
+            <div>....</div>
+        )
+
+    }
+
+.
+.
+.
 
 [back](../../README.md)
