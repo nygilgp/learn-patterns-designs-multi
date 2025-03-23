@@ -1,8 +1,10 @@
-import Users from "./components/users";
+import SearchMeals from './components/SearchMeals';
+import Users from './components/Users';
 
 function App() {
   return (
     <>
+      <SearchMeals />
       <Users />
     </>
   );
