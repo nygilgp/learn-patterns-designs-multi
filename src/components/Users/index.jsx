@@ -1,29 +1,7 @@
-import React, { useEffect } from "react";
-import { fetchUser } from "../api/userApi";
-import styled from "styled-components";
-import LazyLoader from "./lazy-loader";
-import { useApi } from "../api/hooks/useApi";
-
-const useFetchUsers = () => {
-  const {
-    data: users,
-    exec: initFetchUsers,
-    status: fetchUsersStatus,
-    isIdle: isFetchUsersStatusIdle,
-    isPending: isFetchUsersStatusPending,
-    isError: isFetchUsersStatusError,
-    isSuccess: isFetchUsersStatusSuccess,
-  } = useApi(() => fetchUser().then((response) => response.data));
-  return {
-    users,
-    fetchUsersStatus,
-    initFetchUsers,
-    isFetchUsersStatusIdle,
-    isFetchUsersStatusPending,
-    isFetchUsersStatusError,
-    isFetchUsersStatusSuccess,
-  };
-};
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import LazyLoader from '../lazy-loader';
+import useFetchUsers from './useFetchUsers';
 
 const Container = styled.div`
   margin-left: auto;
@@ -73,11 +51,9 @@ function Users() {
   return (
     <Container>
       <FetchButton onClick={initFetchUsers}>
-        <LazyLoader
-          show={isFetchUsersStatusPending}
-          delay={500}
-          default="Fetch Users"
-        />
+        <LazyLoader show={isFetchUsersStatusPending} delay={500}>
+          Fetch Users
+        </LazyLoader>
       </FetchButton>
       <FlexContainer>
         <ContentContainer>
